@@ -16,3 +16,7 @@ build/
 .navigation
 captures/
 output.json
+
+#Github
+LICENSE
+README.md
