@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ic_launcher_background"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+    tools:context="com.curbmap.android.SplashActivity">
+
+ <android.support.v7.widget.AppCompatImageView
+     android:id="@+id/logo"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentEnd="true"
+     android:layout_alignParentTop="true"
+     android:layout_margin="197px"
+     android:paddingBottom="180px"
+     android:src="@drawable/curbmap_logo" />
+
+ <TextView
+     android:id="@+id/textView_curb"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBaseline="@id/textView_map"
+     android:layout_alignBottom="@id/textView_map"
+     android:layout_alignParentStart="true"
+     android:layout_marginStart="79dp"
+     android:fontFamily="@font/montserratalternates_semibold"
+     android:text="curb"
+     android:textColor="#FFA5A3FF"
+     android:textSize="60dp" />
+
+ <TextView
+     android:id="@+id/textView_map"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBottom="@id/logo"
+     android:layout_toEndOf="@id/textView_curb"
+     android:fontFamily="@font/montserratalternates_semibold"
+     android:text="map"
+     android:textColor="#FF4A00C2"
+     android:textSize="60dp" />
+
+
+</RelativeLayout>
