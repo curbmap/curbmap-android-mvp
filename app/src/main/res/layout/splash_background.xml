@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ic_launcher_background"
-    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-    tools:context="com.curbmap.android.SplashActivity">
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
  <android.support.v7.widget.AppCompatImageView
      android:id="@+id/logo"
@@ -14,20 +14,20 @@
      android:layout_alignParentTop="true"
      android:layout_margin="197px"
      android:paddingBottom="180px"
-     android:src="@drawable/curbmap_logo" />
+     app:srcCompat="@drawable/curbmap_logo" />
 
  <TextView
      android:id="@+id/textView_curb"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:layout_alignBaseline="@id/textView_map"
-     android:layout_alignBottom="@id/textView_map"
+     android:layout_alignBottom="@+id/logo"
      android:layout_alignParentStart="true"
-     android:layout_marginStart="79dp"
+     android:layout_marginStart="51dp"
      android:fontFamily="@font/montserratalternates_semibold"
      android:text="curb"
      android:textColor="#FFA5A3FF"
-     android:textSize="60dp" />
+     android:textSize="60dp"
+     tools:ignore="HardcodedText" />
 
  <TextView
      android:id="@+id/textView_map"

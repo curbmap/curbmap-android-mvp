@@ -1,44 +1,91 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'kotlin-android'
 
+/**
+ *  See: versions.gradle.
+ *  Do not add dependency version numbers here
+ **/
 android {
-    compileSdkVersion 27
+    compileSdkVersion build_version.target_sdk
+    buildToolsVersion build_version.tools
     defaultConfig {
         applicationId "com.curbmap.android"
-        minSdkVersion 19
-        targetSdkVersion 27
+        minSdkVersion build_version.min_sdk
+        targetSdkVersion build_version.target_sdk
         versionCode 0
         versionName "0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
+    dataBinding {
+        enabled = false
+    }
+
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:exifinterface:27.1.1'
-
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    compileOnly 'org.projectlombok:lombok:1.16.20'
-    annotationProcessor 'org.projectlombok:lombok:1.16.20'
-
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
+    /**
+     *  See: versions.gradle.
+     *  Do not add dependency version numbers here
+     **/
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation support.v13
+    implementation support.exif_interface
+    implementation support.preference_v14
+    implementation support.annotations
+    implementation support.vector_drawable
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation dagger.dagger2
+    implementation dagger.android
+    implementation dagger.android_support
+    annotationProcessor dagger.anotation_compiler
+    annotationProcessor dagger.android_support_anotation_compiler
+    implementation retrofit.retrofit2
+    implementation retrofit.gson
+    implementation retrofit.mock
+    implementation deps.gson
+    implementation deps.mock_web_server
+    implementation butterknife.butterknife
+    annotationProcessor butterknife.compiler
+    // ViewModel and LiveData
+    implementation lifecycle.extensions
+    implementation lifecycle.runtime
+    annotationProcessor lifecycle.compiler
+    implementation lifecycle.java8
+    testImplementation lifecycle.testing
     implementation 'com.wonderkiln:camerakit:0.13.1'
+    testImplementation robolectric.robolectric
+    testImplementation junit.junit
+    androidTestImplementation support_test.runner
+    androidTestImplementation support_test.rules
+    androidTestImplementation espresso.core
+    implementation files('libs/openlocationcode.jar')
+}
 
-    implementation 'com.google.code.gson:gson:2.8.2'
-
+repositories {
+    mavenCentral()
 }

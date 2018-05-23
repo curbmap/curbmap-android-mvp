@@ -1,20 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-
-    <com.wonderkiln.camerakit.CameraView
-    android:id="@+id/camera_kit"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:adjustViewBounds="true"
-    />
+    android:theme="@style/Local.Curbmap">
 
-    <android.support.v7.widget.AppCompatButton
+    <com.wonderkiln.camerakit.CameraView
+        android:id="@+id/layout_camera_kit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:visibility="visible" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/account_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@null"
+        android:baselineAlignBottom="false"
+        android:visibility="visible"
+        app:srcCompat="@drawable/icon_account_circle" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:background="@null"
+        android:visibility="visible"
+        app:srcCompat="@drawable/icon_settings" />
+
+    <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/capture_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/camera_kit"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:alpha="0.5"
+        android:background="@drawable/icon_gradient"
+        android:foregroundGravity="bottom"
+        android:visibility="visible"
+        app:srcCompat="@drawable/icon_camera" />
 
 </RelativeLayout>

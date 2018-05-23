@@ -31,6 +31,7 @@ import android.hardware.SensorManager;
 
 
 public class Compass implements SensorEventListener {
+
     private static final String TAG = "Compass";
     private CompassListener listener;
     private SensorManager sensorManager;
