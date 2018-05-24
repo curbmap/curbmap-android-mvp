@@ -1,0 +1,129 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+
+def build_version = [:]
+build_version.min_sdk = 19
+build_version.target_sdk = 27
+build_version.tools = "27.0.3"
+ext.build_version = build_version
+
+def versions = [:]
+versions.android_gradle_plugin = "3.1.2"
+versions.arch_core = "1.1.1"
+versions.room = "1.1.0-beta3"
+versions.lifecycle = "1.1.1"
+versions.support = "27.1.1"
+versions.dagger = "2.15"
+versions.junit = "4.12"
+versions.espresso = "3.0.1"
+versions.retrofit = "2.4.0"
+versions.okhttp_logging_interceptor = "3.9.0"
+versions.gson = "2.8.2"
+versions.mockwebserver = "3.8.1"
+versions.apache_commons = "2.5"
+versions.mockito = "2.7.19"
+versions.mockito_all = "1.10.19"
+versions.dexmaker = "2.2.0"
+versions.constraint_layout = "1.0.2"
+versions.rxjava2 = "2.1.3"
+versions.rx_android = "2.0.1"
+versions.hamcrest = "1.3"
+versions.kotlin = "1.2.20"
+versions.robolectric= "3.8"
+versions.expresso ="3.0.1"
+versions.support_test = "1.0.1"
+versions.butterknife = "8.8.1"
+//ext.versions = versions
+
+build_version.gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+
+def support = [:]
+support.annotations = "com.android.support:support-annotations:$versions.support"
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.core_utils = "com.android.support:support-core-utils:$versions.support"
+support.exif_interface = "com.android.support:exifinterface:$versions.support"
+support.vector_drawable = "com.android.support:support-vector-drawable:$versions.support"
+support.preference_v14 = "com.android.support:preference-v14:$versions.support"
+support.v13 = "com.android.support:support-v13:$versions.support"
+ext.support = support
+
+def butterknife = [:]
+butterknife.butterknife = "com.jakewharton:butterknife:$versions.butterknife"
+butterknife.compiler =  "com.jakewharton:butterknife-compiler:$versions.butterknife"
+ext.butterknife = butterknife
+
+def room = [:]
+room.runtime = "android.arch.persistence.room:runtime:$versions.room"
+room.compiler = "android.arch.persistence.room:compiler:$versions.room"
+room.rxjava2 = "android.arch.persistence.room:rxjava2:$versions.room"
+room.testing = "android.arch.persistence.room:testing:$versions.room"
+ext.room = room
+
+def lifecycle = [:]
+lifecycle.runtime = "android.arch.lifecycle:runtime:$versions.lifecycle"
+lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.lifecycle"
+lifecycle.java8 = "android.arch.lifecycle:common-java8:$versions.lifecycle"
+lifecycle.compiler = "android.arch.lifecycle:compiler:$versions.lifecycle"
+lifecycle.testing = "android.arch.core:core-testing:$versions.lifecycle"
+ext.lifecycle = lifecycle
+
+def retrofit = [:]
+retrofit.retrofit2 = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+retrofit.mock = "com.squareup.retrofit2:retrofit-mock:$versions.retrofit"
+ext.retrofit = retrofit
+deps.gson =  "com.google.code.gson:gson:$versions.gson"
+
+deps.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${versions.okhttp_logging_interceptor}"
+
+deps.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
+
+
+def dagger = [:]
+dagger.dagger2 = "com.google.dagger:dagger:$versions.dagger"
+dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.anotation_compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.android_support_anotation_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
+ext.dagger = dagger
+
+
+//Testing
+def espresso = [:]
+espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
+espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
+espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
+ext.espresso = espresso
+
+def atsl = [:] //Android Test Support Library
+atsl.runner = "com.android.support.test:runner:$versions.support_test"
+atsl.rules = "com.android.support.test:rules:$versions.support_test"
+ext.support_test = atsl
+
+def robolectric = [:]
+robolectric.robolectric = "org.robolectric:robolectric:$versions.robolectric"
+ext.robolectric = robolectric
+
+def junit = [:]
+junit.junit = "junit:junit:$versions.junit"
+ext.junit = junit
+
+def mockito = [:]
+mockito.core = "org.mockito:mockito-core:$versions.mockito"
+mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
+ext.mockito = mockito
+
+
+
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+}
+
+ext.addRepos = this.&addRepos
