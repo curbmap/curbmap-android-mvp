@@ -2,13 +2,14 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings"
+    android:fragment="com.curbmap.android.ui.settings.SettingsFragment"
     android:singleLineTitle="true">
     <SwitchPreference
         android:background="@drawable/splash_background"
         android:defaultValue="false"
         android:key="pref_key_data_wifi_only"
-        android:summaryOff="Any Data Connection"
-        android:summaryOn="WiFi Only Connection"
+        android:summaryOff="@string/wifi_preference_off"
+        android:summaryOn="@string/wifi_preference_on"
         android:title="@string/pref_title_data_wifi_only" />
 
 </PreferenceScreen>

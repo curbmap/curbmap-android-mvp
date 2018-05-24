@@ -16,10 +16,6 @@ import retrofit2.http.Part;
  * Created by Joshua Herman on 4/17/18.
  */
 
-/**
- *
- */
-
 public interface CurbmapService{
 
     /**

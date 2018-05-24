@@ -53,7 +53,7 @@ public class NavigationController {
         MainFragment mainFragment = new MainFragment();
         fragmentManager.beginTransaction()
                 .replace(containerId, mainFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     public void navigateToLogin(String username, @Nullable String password ){
