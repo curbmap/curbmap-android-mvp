@@ -34,6 +34,7 @@ public class UserRepository {
 
     private CurbmapService curbmapService;
     private AppThreadingExecutors appThreadingExecutors;
+    LiveData<ApiResponse<User>> liveDataUser;
     private User user;
 
     public UserRepository(CurbmapService curbmapService, AppThreadingExecutors appThreadingExecutors) {
@@ -44,7 +45,7 @@ public class UserRepository {
 
     public LiveData<NetworkState<User>> loginUser(@NonNull String username, @NonNull String password) {
 
-        
+
         return new NetworkBoundResource<User, User>(appThreadingExecutors) {
 
             /**
@@ -81,7 +82,10 @@ public class UserRepository {
             @Override
             protected LiveData<ApiResponse<User>> createCall() {
                 Log.d(TAG, "createCall() Username: " + username + " Password: " + password);
-                return curbmapService.doLogin(username, password);
+
+                liveDataUser = curbmapService.doLogin(username, password);
+                Log.i(TAG, "createCall - token: " + liveDataUser.getValue().of.getToken());
+                return liveDataUser;
             }
 
             /**
@@ -92,6 +96,7 @@ public class UserRepository {
              */
             @NonNull
             @Override
+            //Todo: login gets to here and the fails
             protected LiveData<User> loadFromDb() {
                 Log.i(TAG, "loadFromDb() Called");
                 return EmptyLiveData.create();

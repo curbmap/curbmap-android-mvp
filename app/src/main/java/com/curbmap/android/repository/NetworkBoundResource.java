@@ -18,6 +18,7 @@ package com.curbmap.android.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -40,7 +41,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final AppThreadingExecutors appThreadingExecutors;
 
     private final MediatorLiveData<NetworkState<ResultType>> resultLiveDataMediator = new MediatorLiveData<>();
-
+    private final MutableLiveData<NetworkState<ResultType>> resultMutableLiveData = new MutableLiveData<>();
     // SEE: https://github.com/googlesamples/android-architecture-components/blob/5ec49a4bcdada748b4968138c4182deef3741123/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.java#L45
     @MainThread
     NetworkBoundResource(AppThreadingExecutors appThreadingExecutors) {
@@ -50,8 +51,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         resultLiveDataMediator.setValue(NetworkState.loading(null));
 
         LiveData<ResultType> dbSource = loadFromDb();
-
-        //if(dbSource.)
 
         resultLiveDataMediator.addSource(dbSource, data -> {
             resultLiveDataMediator.removeSource(dbSource);
@@ -78,7 +77,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
 
         LiveData<ApiResponse<RequestType>> apiResponse = createCall();
-
         // we re-attach dbSource as a new source, it will dispatch its latest value quickly
         resultLiveDataMediator.addSource(dbSource, newData -> setValue(NetworkState.loading(newData)));
         resultLiveDataMediator.addSource(apiResponse, (ApiResponse<RequestType> response) -> {

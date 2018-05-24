@@ -24,6 +24,6 @@ public class UserRepositoryFactory {
     private static final String TAG = "UserRepositoryFactory";
 
     public static UserRepository create(){
-        return new UserRepository(CurbmapServiceFactory.create(), new AppThreadingExecutors());
+        return new UserRepository(CurbmapServiceFactory.create(), AppThreadingExecutors.init());
     }
 }

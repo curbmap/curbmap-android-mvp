@@ -30,7 +30,7 @@ public class MainViewModel extends ViewModel {
     UserRepository userRepository;
 
     public MainViewModel(){
-        userRepository = new UserRepository(CurbmapServiceFactory.create(), new AppThreadingExecutors());
+        userRepository = new UserRepository(CurbmapServiceFactory.create(), AppThreadingExecutors.init());
     }
 
     @Override

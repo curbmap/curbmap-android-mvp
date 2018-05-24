@@ -19,8 +19,6 @@ package com.curbmap.android.ui.settings;
 import android.arch.lifecycle.ViewModel;
 import android.content.SharedPreferences;
 
-import javax.inject.Inject;
-
 /**
  * Created by ${EMAIL} on 4/23/18.
  */
@@ -30,7 +28,6 @@ public class SettingsViewModel extends ViewModel {
 
     private SharedPreferences mSharedPreferences;
 
-    @Inject
     public  SettingsViewModel(SharedPreferences sharedPreferences){
         this.mSharedPreferences = sharedPreferences;
     }

@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.curbmap.android.R;
-import com.curbmap.android.ui.NavigationController;
+import com.curbmap.android.ui.MainActivity;
 import com.wonderkiln.camerakit.CameraKit;
 import com.wonderkiln.camerakit.CameraKitEventCallback;
 import com.wonderkiln.camerakit.CameraKitImage;

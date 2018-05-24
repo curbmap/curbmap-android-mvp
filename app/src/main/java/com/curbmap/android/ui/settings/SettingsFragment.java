@@ -19,9 +19,6 @@ package com.curbmap.android.ui.settings;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.curbmap.android.R;
 
@@ -41,25 +38,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     //TODO: Fix Text Color
 
+    public static SettingsFragment create() {
+        return new SettingsFragment();
+    }
+
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.preferences_main, null);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        //AndroidInjection.inject(this);
-        super.onCreate(savedInstanceState);
-        //getArguments().getString("settings");
-        //addPreferencesFromResource(R.xml.preferences_main);
 
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  super.onCreateView(inflater, container, savedInstanceState);
-        view.setBackgroundColor(getResources().getColor(android.R.color.white));
-        return view;
-    }
 }

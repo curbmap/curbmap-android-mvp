@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Local.Curbmap">
 
-        <activity android:name=".ui.main.MainActivity"
+        <activity
+            android:name=".ui.MainActivity"
             android:theme="@style/Local.Curbmap"
             android:windowSoftInputMode="adjustResize"
             >

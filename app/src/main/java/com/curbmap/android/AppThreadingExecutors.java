@@ -24,14 +24,18 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
- *
+ * Singleton
  */
-@Singleton
 public class AppThreadingExecutors {
+
+    private static AppThreadingExecutors appThreadingExecutors;
+
+    protected AppThreadingExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
+        this.diskIO = diskIO;
+        this.networkIO = networkIO;
+        this.mainThread = mainThread;
+    }
 
     private final Executor diskIO;
 
@@ -39,17 +43,16 @@ public class AppThreadingExecutors {
 
     private final Executor mainThread;
 
-    public AppThreadingExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
-        this.diskIO = diskIO;
-        this.networkIO = networkIO;
-        this.mainThread = mainThread;
-    }
-
-
-    @Inject
-    public AppThreadingExecutors() {
+    protected AppThreadingExecutors() {
         this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
                 new MainThreadExecutor());
+    }
+
+    public static AppThreadingExecutors init() {
+        if (appThreadingExecutors != null) {
+            return appThreadingExecutors;
+        }
+        return appThreadingExecutors = new AppThreadingExecutors();
     }
 
     public Executor diskIO() {

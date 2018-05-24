@@ -5,7 +5,6 @@ import android.arch.lifecycle.LiveData;
 import com.curbmap.android.model.User;
 import com.google.openlocationcode.OpenLocationCode;
 
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;

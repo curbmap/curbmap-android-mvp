@@ -1,6 +1,8 @@
 <resources>
     <string name="AppName">Curbmap</string>
     <string name="LanguageName">English</string>
+    <string name="permissions_denied">Permission Required For App Function.</string>
+    <string name="close_app">Closing App</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->

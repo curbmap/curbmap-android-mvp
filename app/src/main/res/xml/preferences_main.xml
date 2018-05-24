@@ -3,17 +3,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings"
     android:singleLineTitle="true">
+    <SwitchPreference
+        android:background="@drawable/splash_background"
+        android:defaultValue="false"
+        android:key="pref_key_data_wifi_only"
+        android:summaryOff="Any Data Connection"
+        android:summaryOn="WiFi Only Connection"
+        android:title="@string/pref_title_data_wifi_only" />
 
-
-    <PreferenceCategory
-        android:key="pref_header_data_sync"
-        android:title="@string/pref_header_data_wifi">
-        <SwitchPreference
-            android:background="@drawable/splash_background"
-            android:defaultValue="false"
-            android:key="pref_key_data_wifi_only"
-            android:summaryOff="Any Data Connection"
-            android:summaryOn="WiFi Only Connection"
-            android:title="@string/pref_title_data_wifi_only" />
-    </PreferenceCategory>
 </PreferenceScreen>

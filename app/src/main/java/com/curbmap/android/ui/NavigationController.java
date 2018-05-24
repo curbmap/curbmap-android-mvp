@@ -21,7 +21,6 @@ import android.support.v4.app.FragmentManager;
 
 import com.curbmap.android.R;
 import com.curbmap.android.ui.login.LoginDialogFragment;
-import com.curbmap.android.ui.main.MainActivity;
 import com.curbmap.android.ui.main.MainFragment;
 import com.curbmap.android.ui.settings.SettingsFragment;
 
@@ -35,9 +34,19 @@ public class NavigationController {
     private final int containerId;
     private final FragmentManager fragmentManager;
 
-    public NavigationController(MainActivity mainActivity){
+    private static NavigationController navigationController;
+
+    private NavigationController(MainActivity mainActivity) {
         this.containerId = R.id.container;
         this.fragmentManager = mainActivity.getSupportFragmentManager();
+    }
+
+    public static NavigationController create(MainActivity mainActivity) {
+        if (navigationController != null) {
+            return navigationController;
+        } else {
+            return navigationController = new NavigationController(mainActivity);
+        }
     }
 
     public void navigateToMainFragment(){
@@ -52,11 +61,11 @@ public class NavigationController {
         fragmentManager.beginTransaction()
                 .replace(containerId, loginDialogFragment)
                 .addToBackStack(null)
-                .commitAllowingStateLoss();
+                .commit();
     }
 
     public void navigateToSettings(){
-        SettingsFragment settingsFragment = new SettingsFragment();
+        SettingsFragment settingsFragment = SettingsFragment.create();
         fragmentManager.beginTransaction()
                 .replace(containerId, settingsFragment)
                 .addToBackStack(null)

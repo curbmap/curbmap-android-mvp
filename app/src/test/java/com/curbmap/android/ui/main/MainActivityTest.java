@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.curbmap.android.BuildConfig;
 import com.curbmap.android.R;
+import com.curbmap.android.ui.MainActivity;
 import com.curbmap.android.ui.settings.SettingsFragment;
 import com.wonderkiln.camerakit.CameraView;
 

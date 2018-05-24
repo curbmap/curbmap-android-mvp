@@ -27,9 +27,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import javax.inject.Singleton;
 
-@Singleton
 public class LocationSharingService extends LifecycleService implements LocationListener {
 
     private static final String TAG = "LocationSharingService";
