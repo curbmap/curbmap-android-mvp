@@ -16,10 +16,12 @@
 
 package com.curbmap.android.ui.main;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
@@ -31,8 +33,6 @@ import android.widget.ImageButton;
 import com.curbmap.android.R;
 import com.curbmap.android.ui.MainActivity;
 import com.wonderkiln.camerakit.CameraKit;
-import com.wonderkiln.camerakit.CameraKitEventCallback;
-import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraView;
 
 import butterknife.BindView;
@@ -96,29 +96,37 @@ public class MainFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        cameraView.start();
+        cameraView.setPermissions(CameraKit.Constants.PERMISSIONS_LAZY);
+        requestLocationPermission();
     }
 
     @Override
     public void onResume() {
-        cameraView.start();
         super.onResume();
+        cameraView.start();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onDestroy() {
         unbinder.unbind();
         super.onDestroy();
     }
 
+    @Override
+    public void onPause() {
+        cameraView.stop();
+        super.onPause();
+
+    }
+
     @OnClick(R.id.capture_button)
     void doCapture() {
         Log.d(TAG, "doCapture button");
-        cameraView.captureImage(new CameraKitEventCallback<CameraKitImage>() {
-            @Override
-            public void callback(CameraKitImage cameraKitImage) {
-                mainViewModel.saveImage(cameraKitImage.getJpeg());
-                Log.i(TAG, "captureImage Called");
-            }
+        cameraView.captureImage(cameraKitImage -> {
+            mainViewModel.saveImage(cameraKitImage.getJpeg());
+            Log.i(TAG, "captureImage Called");
         });
     }
 
@@ -133,6 +141,45 @@ public class MainFragment extends Fragment{
     @OnClick(R.id.account_circle)
     void doLoginFragment() {
         MainActivity.getNavigationController().navigateToLogin(null,null);
+    }
+
+    /*private void checkAllPermissions(){
+        if(PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ||
+                PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                ){
+            requestCameraPermission();
+        }
+
+        if(PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)){
+            requestLocationPermission();
+        }
+    }
+
+    private void requestCameraPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this.requireContext(),
+                Manifest.permission_group.CAMERA) ) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, 9);
+        }
+
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission_group.MICROPHONE)){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO},99);
+        }
+    }
+    */
+
+    private void requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                Manifest.permission_group.LOCATION)) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
+        }
     }
 
 }
