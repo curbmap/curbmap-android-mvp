@@ -19,12 +19,36 @@ package com.curbmap.android.ui.main;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
+import com.curbmap.android.AppThreadingExecutors;
+import com.curbmap.android.api.CurbmapServiceFactory;
+import com.curbmap.android.model.User;
+import com.curbmap.android.repository.UserRepository;
+
 public class MainViewModel extends ViewModel {
     private String TAG = this.getClass().getSimpleName();
+
+    UserRepository userRepository;
+
+    public MainViewModel(){
+        userRepository = new UserRepository(CurbmapServiceFactory.create(), new AppThreadingExecutors());
+    }
 
     @Override
     protected void onCleared() {
         super.onCleared();
         Log.d(TAG,"on cleared called");
+    }
+
+    public void saveImage(byte[] jpeg){
+        Log.i(TAG, "saveImage(jpeg) called");
+    }
+
+    public void doDefaultLogin(){
+        Log.i(TAG,"doDefaultLogin called");
+        userRepository.loginUser(User.DEFAULT_USER_NAME,User.DEFAULT_USER_PASSWORD);
+    }
+
+    public void doLogin(String username, String password){
+        userRepository.loginUser(username,password);
     }
 }

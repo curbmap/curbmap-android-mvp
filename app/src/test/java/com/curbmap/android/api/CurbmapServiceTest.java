@@ -14,7 +14,28 @@
  * limitations under the License.
  */
 
-package com.curbmap.android.dependencyinjection;
+package com.curbmap.android.api;
 
-public interface Injectable {
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.io.IOException;
+
+import okhttp3.mockwebserver.MockWebServer;
+
+
+// See: https://github.com/square/retrofit/blob/master/samples/src/main/java/com/example/retrofit/SimpleMockService.java
+
+
+@RunWith(JUnit4.class)
+public class CurbmapServiceTest {
+
+    private MockWebServer mockWebServer;
+
+    @Before
+    private void createService() throws IOException{
+
+
+    }
 }

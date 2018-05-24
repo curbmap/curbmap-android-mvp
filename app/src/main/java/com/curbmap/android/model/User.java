@@ -27,6 +27,8 @@ public class User {
     @SerializedName("token")
     String token;
 
+    public User(){}
+
     public String getUsername() {
         return username;
     }

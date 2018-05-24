@@ -18,18 +18,12 @@ package com.curbmap.android.ui.settings;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.curbmap.android.R;
-
-import javax.inject.Inject;
-
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -43,7 +37,7 @@ import dagger.android.support.HasSupportFragmentInjector;
  * API Guide</a> for more information on developing a Settings UI.
  */
 
-public class SettingsFragment extends PreferenceFragmentCompat implements HasSupportFragmentInjector{
+public class SettingsFragment extends PreferenceFragmentCompat {
 
     //TODO: Fix Text Color
 
@@ -52,11 +46,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements HasSup
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.preferences_main, null);
     }
-
-    @Inject
-    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,12 +61,5 @@ public class SettingsFragment extends PreferenceFragmentCompat implements HasSup
         View view =  super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(getResources().getColor(android.R.color.white));
         return view;
-    }
-
-
-
-    @Override
-    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-        return dispatchingAndroidInjector;
     }
 }

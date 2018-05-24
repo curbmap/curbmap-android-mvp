@@ -18,26 +18,30 @@ package com.curbmap.android.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.curbmap.android.AppThreadingExecutors;
-import com.curbmap.android.CurbmapApplication;
 import com.curbmap.android.api.ApiResponse;
 import com.curbmap.android.domain.NetworkState;
 
 import java.util.Objects;
 
+
+/**
+ *
+ * @param <ResultType> output Object
+ * @param <RequestType> input Object
+ */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private final AppThreadingExecutors appThreadingExecutors;
 
     private final MediatorLiveData<NetworkState<ResultType>> resultLiveDataMediator = new MediatorLiveData<>();
 
-    //https://github.com/googlesamples/android-architecture-components/blob/5ec49a4bcdada748b4968138c4182deef3741123/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.java#L45
+    // SEE: https://github.com/googlesamples/android-architecture-components/blob/5ec49a4bcdada748b4968138c4182deef3741123/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.java#L45
     @MainThread
     NetworkBoundResource(AppThreadingExecutors appThreadingExecutors) {
         //Setup MultiThreading
@@ -46,6 +50,8 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         resultLiveDataMediator.setValue(NetworkState.loading(null));
 
         LiveData<ResultType> dbSource = loadFromDb();
+
+        //if(dbSource.)
 
         resultLiveDataMediator.addSource(dbSource, data -> {
             resultLiveDataMediator.removeSource(dbSource);
@@ -108,9 +114,10 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         return resultLiveDataMediator;
     }
 
+
     @WorkerThread
     protected RequestType processResponse(ApiResponse<RequestType> response) {
-        return response.body;
+        return response.of;
     }
 
     /**

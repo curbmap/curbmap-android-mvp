@@ -16,17 +16,13 @@
 
 package com.curbmap.android.ui.login;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -34,21 +30,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import com.curbmap.android.R;
+import com.curbmap.android.ui.main.MainViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/* Todo: https://github.com/codepath/android_guides/wiki/Working-with-the-Soft-Keyboard
+ * Move View Up on soft keyboard visible
+ * */
 public class LoginDialogFragment extends DialogFragment{
-        //implements Injectable, HasSupportFragmentInjector{
 
     public static final String TAG = "LoginDialogFragment";
 
-    LoginViewModel loginViewModel;
+    private static final String USERNAME = "USERNAME";
+    private static final String PASSWORD = "PASSWORD";
+
+
+    MainViewModel mainViewModel;
     Unbinder unbinder;
     static int title;
 
@@ -62,18 +64,22 @@ public class LoginDialogFragment extends DialogFragment{
     AppCompatButton buttonSubmit;
 
 
+    public static LoginDialogFragment create(@Nullable String username, @Nullable String password){
+        LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(USERNAME, username);
+        args.putString(PASSWORD,password);
+        loginDialogFragment.setArguments(args);
+        return loginDialogFragment;
+    }
 
 
- /*   @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        title = getArguments().getInt("title");
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+    }
 
-        return new AlertDialog.Builder(getContext())
-                .setIcon(R.drawable.icon_account_circle)
-                .setTitle(title)
-                .create();
-    }*/
 
     @Nullable
     @Override
@@ -81,9 +87,22 @@ public class LoginDialogFragment extends DialogFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_login, container, false);
         unbinder = ButterKnife.bind(this, view);
-        view.setBackgroundColor(getResources().getColor(android.R.color.white));
+        //view.setBackgroundColor(getResources().getColor(android.R.color.white));
         return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //ButterKnife.bind(this, view);
+        if (savedInstanceState != null){
+            editTextUsername.setText(savedInstanceState.getString(USERNAME));
+            String password = savedInstanceState.getString(PASSWORD);
+            if(!password.equals(null)){
+                editTextPassword.setText(password);
+            }
+        }
+    }
+
 
     @Override
     public void startActivity(Intent intent) {
@@ -91,22 +110,16 @@ public class LoginDialogFragment extends DialogFragment{
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+    }
+
+    @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         super.startActivityForResult(intent, requestCode);
 
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-    }
-
 
     @Override
     public void onResume() {
@@ -123,8 +136,7 @@ public class LoginDialogFragment extends DialogFragment{
     @VisibleForTesting
     void doSubmitForLogin(){
         Log.d(TAG, "Username: "+ editTextUsername.getText() + " Password: "+ editTextPassword.getText());
-
-        loginViewModel.submitLoginRequest(editTextUsername.getText().toString(), editTextPassword.getText().toString());
+        mainViewModel.doLogin(editTextUsername.getText().toString(), editTextPassword.getText().toString());
     }
 
 

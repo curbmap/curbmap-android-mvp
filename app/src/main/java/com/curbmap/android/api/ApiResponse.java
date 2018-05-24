@@ -47,7 +47,7 @@ public class ApiResponse<T> {
     public final int code;
 
     @Nullable
-    public final T body;
+    public final T of;
 
     @Nullable
     public final String errorMessage;
@@ -61,7 +61,7 @@ public class ApiResponse<T> {
      */
     public ApiResponse(Throwable error) {
         code = 500;
-        body = null;
+        of = null;
         errorMessage = error.getMessage();
         links = Collections.emptyMap();
     }
@@ -71,7 +71,7 @@ public class ApiResponse<T> {
         code = response.code();
 
         if (response.isSuccessful()) {
-            body = response.body();
+            of = response.body();
             errorMessage = null;
         } else {
             //Set error
@@ -88,7 +88,7 @@ public class ApiResponse<T> {
                 message = response.message();
             }
             errorMessage = message;
-            body = null;
+            of = null;
         }
 
         String linkHeader = response.headers().get("link");

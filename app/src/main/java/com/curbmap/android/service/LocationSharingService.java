@@ -16,10 +16,7 @@
 
 package com.curbmap.android.service;
 
-import android.app.Service;
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleService;
-import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;

@@ -39,7 +39,7 @@ import static com.curbmap.android.domain.Status.ERROR;
 import static com.curbmap.android.domain.Status.LOADING;
 
 /**
- * A generic class that holds a value with its loading status.
+ * holds an Object value with it's network status / state.
  * @param <T>
  */
 public class NetworkState<T> {

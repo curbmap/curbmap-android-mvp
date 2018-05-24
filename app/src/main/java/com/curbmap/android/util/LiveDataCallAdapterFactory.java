@@ -29,8 +29,6 @@ import retrofit2.Retrofit;
 
 public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
 
-
-
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         if (getRawType(returnType) != LiveData.class) {
@@ -47,6 +45,7 @@ public class LiveDataCallAdapterFactory extends CallAdapter.Factory {
         if (! (observableType instanceof ParameterizedType)) {
             throw new IllegalArgumentException("NetworkState must be parameterized");
         }
+
         Type bodyType = getParameterUpperBound(0, (ParameterizedType) observableType);
         return new LiveDataCallAdapter<>(bodyType);
     }

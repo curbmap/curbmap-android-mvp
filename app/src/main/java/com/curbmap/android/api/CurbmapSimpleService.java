@@ -1,5 +1,5 @@
 /*
- * Copyright ${YEAR} ${PROJECT_NAME}
+ * Copyright (c) 2018. Curbmap - All rights reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,19 @@
  * limitations under the License.
  */
 
-package com.curbmap.android.dependencyinjection;
+package com.curbmap.android.api;
 
-import android.arch.lifecycle.ViewModel;
+import com.curbmap.android.model.User;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import retrofit2.Call;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 
-import dagger.MapKey;
+public interface CurbmapSimpleService {
 
-@Documented
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@MapKey
-@interface ViewModelKey {
-    Class<? extends ViewModel> value();
+    static final String TAG = "CurbmapSimpleService";
+
+    @POST("login")
+    @FormUrlEncoded
+    Call<User> doDefaultLogin(String username, String password);
 }

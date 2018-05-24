@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".CurbmapApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AppName"
@@ -18,7 +17,9 @@
         android:theme="@style/Local.Curbmap">
 
         <activity android:name=".ui.main.MainActivity"
-            android:theme="@style/Local.Curbmap">
+            android:theme="@style/Local.Curbmap"
+            android:windowSoftInputMode="adjustResize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

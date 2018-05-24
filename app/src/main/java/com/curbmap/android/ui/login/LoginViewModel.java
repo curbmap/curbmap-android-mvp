@@ -17,29 +17,35 @@
 package com.curbmap.android.ui.login;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.curbmap.android.domain.NetworkState;
 import com.curbmap.android.model.User;
-import com.curbmap.android.repository.UserRepository;
-
-import javax.inject.Inject;
 
 public class LoginViewModel extends ViewModel {
 
     private static final String TAG = "LoginViewModel";
+    MutableLiveData<String> token = new MutableLiveData<>();
+    LiveData<NetworkState<User>> user;
 
-    private UserRepository userRepository;
+    //private UserRepository userRepository;
 
-    @Inject LoginViewModel(UserRepository userRepository) {
-        this.userRepository =  userRepository;
+
+
+    public LoginViewModel(){
+       //this.userRepository = new UserRepository( CurbmapServiceFactory.create(), new AppThreadingExecutors());
+        /*user = Transformations.switchMap(token, token ->{
+            if(token == null){
+                return EmptyLiveData.create();
+            }else {
+            }
+        });*/
     }
 
-    public LoginViewModel(){}
-
     public void submitLoginRequest(String username, String password){
-        LiveData<NetworkState<User>> networkBoundResource = userRepository.loginUser(username,password);
+       // LiveData<NetworkState<User>> networkBoundResource = userRepository.loginUser(username,password);
         Log.d(TAG, "Username: "+ username + " Password: "+ password);
     }
 

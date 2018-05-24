@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import com.curbmap.android.model.User;
 import com.google.openlocationcode.OpenLocationCode;
 
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -22,8 +23,6 @@ import retrofit2.http.Part;
 
 public interface CurbmapService{
 
-    String API_URL = "https://curbmap.com";
-
     /**
      * Sends a login request to the server
      * Url: https://curbmap.com/login
@@ -38,6 +37,7 @@ public interface CurbmapService{
             @Field("username") String username,
             @Field("password") String password
     );
+
 
     @POST("login")
     @FormUrlEncoded

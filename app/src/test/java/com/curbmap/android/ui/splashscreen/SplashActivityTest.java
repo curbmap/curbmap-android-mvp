@@ -14,33 +14,15 @@
  * limitations under the License.
  */
 
-package com.curbmap.android.dependencyinjection;
+package com.curbmap.android.ui.splashscreen;
 
-import android.app.Application;
+import com.curbmap.android.BuildConfig;
 
-import com.curbmap.android.CurbmapApplication;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-import javax.inject.Singleton;
-
-import dagger.BindsInstance;
-import dagger.Component;
-import dagger.android.AndroidInjectionModule;
-
-
-@Singleton
-@Component(modules = {
-        AndroidInjectionModule.class,
-        AppModule.class
-})
-
-interface AppComponent {
-    @Component.Builder
-    interface Builder{
-        @BindsInstance
-        Builder application(Application application);
-        AppComponent build();
-
-    }
-     void inject(CurbmapApplication curbmapApplication);
-
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class, application = CurbmapApplication.class)
+public class SplashActivityTest {
 }

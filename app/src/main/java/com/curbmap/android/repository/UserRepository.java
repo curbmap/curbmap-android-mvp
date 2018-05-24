@@ -17,7 +17,6 @@
 package com.curbmap.android.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -29,36 +28,33 @@ import com.curbmap.android.domain.NetworkState;
 import com.curbmap.android.model.User;
 import com.curbmap.android.util.EmptyLiveData;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
-
-//Todo: Dependency Injection not creating object.
-@Singleton
 public class UserRepository {
     private static String TAG = "UserRepository";
 
-    private final CurbmapService curbmapService;
-    private final AppThreadingExecutors appThreadingExecutors;
-    private SharedPreferences sharedPreferences;
+    private CurbmapService curbmapService;
+    private AppThreadingExecutors appThreadingExecutors;
+    private User user;
 
-    @Inject
-    UserRepository(CurbmapService curbmapService, AppThreadingExecutors appThreadingExecutors, SharedPreferences sharedPreferences) {
+    public UserRepository(CurbmapService curbmapService, AppThreadingExecutors appThreadingExecutors) {
+        this.user = new User();
         this.curbmapService = curbmapService;
         this.appThreadingExecutors = appThreadingExecutors;
-        this.sharedPreferences = sharedPreferences;
     }
 
-    public LiveData<NetworkState<User>> loginUser(@Nullable String username, @Nullable String password){
+    public LiveData<NetworkState<User>> loginUser(@NonNull String username, @NonNull String password) {
 
-        return new NetworkBoundResource<User,User>(appThreadingExecutors){
+        
+        return new NetworkBoundResource<User, User>(appThreadingExecutors) {
 
             /**
              * {@inheritDoc}
              */
             @Override
             protected void saveCallResult(@NonNull User item) {
-                sharedPreferences.edit().putString("token", item.getToken());
+
+
+                //sharedPreferences.edit().putString("token", item.getToken());
             }
 
             @Override
@@ -84,12 +80,8 @@ public class UserRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<User>> createCall() {
-                if(username != null && password != null){
-                    return curbmapService.doLogin(username,password);
-                }else {
-                    Log.d(TAG, "createCall() Username: "+ username + " Password: "+ password);
-                    return curbmapService.doLogin(User.DEFAULT_USER_NAME, User.DEFAULT_USER_PASSWORD);
-                }
+                Log.d(TAG, "createCall() Username: " + username + " Password: " + password);
+                return curbmapService.doLogin(username, password);
             }
 
             /**
@@ -107,5 +99,4 @@ public class UserRepository {
 
         }.asLiveData();
     }
-
 }
