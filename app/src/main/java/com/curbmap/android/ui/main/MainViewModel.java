@@ -17,20 +17,31 @@
 package com.curbmap.android.ui.main;
 
 import android.arch.lifecycle.ViewModel;
+import android.location.Location;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.curbmap.android.AppThreadingExecutors;
 import com.curbmap.android.api.CurbmapServiceFactory;
 import com.curbmap.android.model.User;
 import com.curbmap.android.repository.UserRepository;
+import com.curbmap.android.service.Location.LocationSupplier;
+
+import java.io.File;
 
 public class MainViewModel extends ViewModel {
     private String TAG = this.getClass().getSimpleName();
 
     UserRepository userRepository;
+    LocationSupplier locationSupplier;
+    File cache;
 
     public MainViewModel(){
         userRepository = new UserRepository(CurbmapServiceFactory.create(), AppThreadingExecutors.init());
+    }
+
+    public void setCacheDirectory(File cache) {
+        this.cache = cache;
     }
 
     @Override
@@ -39,8 +50,12 @@ public class MainViewModel extends ViewModel {
         Log.d(TAG,"on cleared called");
     }
 
-    public void saveImage(byte[] jpeg){
+    //TODO: Write File to Cache Directory
+    public void saveImage(byte[] jpeg, @Nullable Location location, float azimuth) {
+
         Log.i(TAG, "saveImage(jpeg) called");
+        Log.i(TAG, "saveImage location: lat " + location.getLatitude() + ", long " + location.getLongitude());
+        Log.i(TAG, "saveImage compass azimuth: " + azimuth);
     }
 
     public void doDefaultLogin(){

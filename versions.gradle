@@ -36,6 +36,7 @@ versions.robolectric= "3.8"
 versions.expresso ="3.0.1"
 versions.support_test = "1.0.1"
 versions.butterknife = "8.8.1"
+versions.playservices = "15.0.1"
 //ext.versions = versions
 
 build_version.gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
@@ -82,15 +83,9 @@ deps.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${ve
 
 deps.mock_web_server = "com.squareup.okhttp3:mockwebserver:$versions.mockwebserver"
 
-
-def dagger = [:]
-dagger.dagger2 = "com.google.dagger:dagger:$versions.dagger"
-dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
-dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
-dagger.anotation_compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
-dagger.android_support_anotation_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
-ext.dagger = dagger
-
+def google = [:]
+google.location = "com.google.android.gms:play-services-location:$versions.playservices"
+ext.google = google
 
 //Testing
 def espresso = [:]

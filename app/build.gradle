@@ -59,8 +59,7 @@ dependencies {
     implementation support.annotations
     implementation support.vector_drawable
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    annotationProcessor dagger.anotation_compiler
-    annotationProcessor dagger.android_support_anotation_compiler
+    implementation google.location
     implementation retrofit.retrofit2
     implementation retrofit.gson
     implementation retrofit.mock

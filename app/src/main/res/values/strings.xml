@@ -5,6 +5,9 @@
     <string name="close_app">Close App</string>
     <string name="title_activity_settings">Settings</string>
 
+    <!-- Temp-->
+    <string name="default_channel">Default channel</string>
+
     <!-- Strings related to Settings -->
 
     <string name="pref_header_general">Settings</string>

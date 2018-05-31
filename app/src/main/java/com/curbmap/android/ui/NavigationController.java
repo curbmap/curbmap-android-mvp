@@ -56,8 +56,14 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
-    public void navigateToLogin(String username, @Nullable String password ){
-        LoginDialogFragment loginDialogFragment = LoginDialogFragment.create(username, password);
+    public void navigateToLogin(@Nullable String username, @Nullable String password) {
+        LoginDialogFragment loginDialogFragment;
+        if (password != null) {
+            loginDialogFragment = LoginDialogFragment.create(username, password);
+        } else {
+            loginDialogFragment = LoginDialogFragment.create();
+        }
+
         fragmentManager.beginTransaction()
                 .replace(containerId, loginDialogFragment)
                 .addToBackStack(null)

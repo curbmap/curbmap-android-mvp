@@ -67,17 +67,37 @@ public class LoginDialogFragment extends DialogFragment{
     public static LoginDialogFragment create(@Nullable String username, @Nullable String password){
         LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
         Bundle args = new Bundle();
-        args.putString(USERNAME, username);
-        args.putString(PASSWORD,password);
+
+        if (password != null) {
+            args.putString(PASSWORD, password);
+        } else {
+            args.putString(PASSWORD, "");
+        }
+        if (username != null) {
+            args.putString(USERNAME, username);
+        } else {
+            args.putString(USERNAME, "");
+        }
+
         loginDialogFragment.setArguments(args);
         return loginDialogFragment;
     }
 
+    public static LoginDialogFragment create() {
+        LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(PASSWORD, "");
+        args.putString(USERNAME, "");
+        loginDialogFragment.setArguments(args);
+        return new LoginDialogFragment();
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
     }
 
 
@@ -87,7 +107,7 @@ public class LoginDialogFragment extends DialogFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_login, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //view.setBackgroundColor(getResources().getColor(android.R.color.white));
+        view.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
         return view;
     }
 
@@ -97,7 +117,7 @@ public class LoginDialogFragment extends DialogFragment{
         if (savedInstanceState != null){
             editTextUsername.setText(savedInstanceState.getString(USERNAME));
             String password = savedInstanceState.getString(PASSWORD);
-            if(!password.equals(null)){
+            if (password != null) {
                 editTextPassword.setText(password);
             }
         }
@@ -129,7 +149,7 @@ public class LoginDialogFragment extends DialogFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
     }
 
     @OnClick(R.id.layout_login_button_submit)

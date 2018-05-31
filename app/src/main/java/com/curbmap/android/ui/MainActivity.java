@@ -44,28 +44,30 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        navigationController = NavigationController.create(this);
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        navigationController = NavigationController.create(this);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             navigationController.navigateToMainFragment();
         }
-
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
-        checkAllPermissions();
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
+    public void onResume() {
+        super.onResume();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -96,15 +98,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                 // Permission request was denied.
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.permissions_denied)
-                        .setPositiveButton(R.string.close_app, (dialog, which) -> {
-                            dialog.dismiss();
-                            Intent intent = new Intent().setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            intent.setData(Uri.fromParts("package", this.getPackageName(), null));
-                            this.startActivity(intent);
-                            finishAffinity();
-                        }).create().show();
+                showRationaleDialogue(R.string.permissions_denied, R.string.close_app);
             }
         }
     }
@@ -112,13 +106,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private void checkAllPermissions() {
         if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
-            requestLocationPermission();
+            //requestLocationPermission();
         }
 
-        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ||
-                PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                ) {
-            requestCameraPermission();
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)) {
+            //requestCameraPermission();
         }
 
 
@@ -128,13 +120,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission_group.CAMERA)) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA}, PermissionValues.PERMISSION_REQUEST_CAMERA);
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION}, PermissionValues.PERMISSION_REQUEST_CAMERA);
         }
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission_group.MICROPHONE)) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECORD_AUDIO}, 99);
+                    new String[]{Manifest.permission.RECORD_AUDIO}, PermissionValues.PERMISSION_REQUEST_MICROPHONE);
         }
     }
 
@@ -151,7 +143,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
     }
 
-    private void showRationaleDialouge(int rationaleText) {
+    private void showRationaleDialogue(int rationaleText, int actionText) {
+        new AlertDialog.Builder(this)
+                .setMessage(rationaleText)
+                .setPositiveButton(actionText, (dialog, which) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent().setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(Uri.fromParts("package", this.getPackageName(), null));
+                    this.startActivity(intent);
+                    finishAffinity();
+                }).create().show();
     }
+
 
 }

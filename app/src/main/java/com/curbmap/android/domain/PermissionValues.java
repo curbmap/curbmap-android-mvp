@@ -20,6 +20,8 @@ public class PermissionValues {
 
     public static final int PERMISSION_REQUEST_LOCATION = 1337;
     public static final int PERMISSION_REQUEST_CAMERA = 1111;
+    public static final int PERMISSION_REQUEST_MICROPHONE = 99;
+
     private static final String TAG = "PermissionValues";
 
 }

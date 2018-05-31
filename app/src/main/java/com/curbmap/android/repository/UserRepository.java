@@ -28,17 +28,17 @@ import com.curbmap.android.domain.NetworkState;
 import com.curbmap.android.model.User;
 import com.curbmap.android.util.EmptyLiveData;
 
+import java.util.Objects;
 
+//Todo: Call network request
 public class UserRepository {
     private static String TAG = "UserRepository";
 
     private CurbmapService curbmapService;
     private AppThreadingExecutors appThreadingExecutors;
     LiveData<ApiResponse<User>> liveDataUser;
-    private User user;
 
     public UserRepository(CurbmapService curbmapService, AppThreadingExecutors appThreadingExecutors) {
-        this.user = new User();
         this.curbmapService = curbmapService;
         this.appThreadingExecutors = appThreadingExecutors;
     }
@@ -84,7 +84,7 @@ public class UserRepository {
                 Log.d(TAG, "createCall() Username: " + username + " Password: " + password);
 
                 liveDataUser = curbmapService.doLogin(username, password);
-                Log.i(TAG, "createCall - token: " + liveDataUser.getValue().of.getToken());
+                Log.i(TAG, "createCall - token: " + Objects.requireNonNull(liveDataUser.getValue().of).getToken());
                 return liveDataUser;
             }
 

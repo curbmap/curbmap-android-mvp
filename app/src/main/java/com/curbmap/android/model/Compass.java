@@ -33,10 +33,12 @@ import android.hardware.SensorManager;
 public class Compass implements SensorEventListener {
 
     private static final String TAG = "Compass";
+
     private CompassListener listener;
     private SensorManager sensorManager;
-    private Sensor gsensor;
+    private Sensor accelsensor;
     private Sensor msensor;
+    private Sensor rotatesensor;
     private float[] mGravity = new float[3];
     private float[] mGeomagnetic = new float[3];
     private float azimuth;
@@ -45,8 +47,9 @@ public class Compass implements SensorEventListener {
     public Compass(Context context) {
         sensorManager = (SensorManager) context
                 .getSystemService(Context.SENSOR_SERVICE);
-        gsensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        accelsensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         msensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        rotatesensor = sensorManager.getDefaultSensor(Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR);
     }
 
     public float getAzimuth() {
@@ -54,10 +57,11 @@ public class Compass implements SensorEventListener {
     }
 
     public void start() {
-        sensorManager.registerListener(this, gsensor,
+        sensorManager.registerListener(this, accelsensor,
                 SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, msensor,
                 SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     public void stop() {
@@ -128,8 +132,8 @@ public class Compass implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        /*if(sensor.getType() == Sensor.TYPE_GYROSCOPE){
-        }*/
+        if (sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+        }
     }
 
     public interface CompassListener {
