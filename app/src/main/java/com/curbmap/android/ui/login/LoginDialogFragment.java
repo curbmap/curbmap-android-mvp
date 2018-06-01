@@ -17,7 +17,6 @@
 package com.curbmap.android.ui.login;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,7 +63,7 @@ public class LoginDialogFragment extends DialogFragment{
     AppCompatButton buttonSubmit;
 
 
-    public static LoginDialogFragment create(@Nullable String username, @Nullable String password){
+   /* public static LoginDialogFragment create(@Nullable String username, @Nullable String password){
         LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
         Bundle args = new Bundle();
 
@@ -81,16 +80,11 @@ public class LoginDialogFragment extends DialogFragment{
 
         loginDialogFragment.setArguments(args);
         return loginDialogFragment;
-    }
+    }*/
 
     public static LoginDialogFragment create() {
         LoginDialogFragment loginDialogFragment = new LoginDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(PASSWORD, "");
-        args.putString(USERNAME, "");
-        loginDialogFragment.setArguments(args);
-        return new LoginDialogFragment();
-
+        return loginDialogFragment;
     }
 
     @Override
@@ -107,39 +101,15 @@ public class LoginDialogFragment extends DialogFragment{
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.layout_login, container, false);
         unbinder = ButterKnife.bind(this, view);
-        view.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
+        view.setBackgroundColor(getResources().getColor(android.R.color.background_light));
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //ButterKnife.bind(this, view);
-        if (savedInstanceState != null){
-            editTextUsername.setText(savedInstanceState.getString(USERNAME));
-            String password = savedInstanceState.getString(PASSWORD);
-            if (password != null) {
-                editTextPassword.setText(password);
-            }
-        }
-    }
-
-
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-    }
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
 
     }
+
 
     @Override
     public void onResume() {
@@ -155,6 +125,8 @@ public class LoginDialogFragment extends DialogFragment{
     @OnClick(R.id.layout_login_button_submit)
     @VisibleForTesting
     void doSubmitForLogin(){
+
+
         Log.d(TAG, "Username: "+ editTextUsername.getText() + " Password: "+ editTextPassword.getText());
         mainViewModel.doLogin(editTextUsername.getText().toString(), editTextPassword.getText().toString());
     }

@@ -20,4 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn com.google.android.gms.**
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 

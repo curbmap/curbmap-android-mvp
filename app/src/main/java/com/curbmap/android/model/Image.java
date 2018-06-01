@@ -16,6 +16,7 @@
 
 package com.curbmap.android.model;
 
+import android.location.Location;
 import android.support.media.ExifInterface;
 import android.util.Log;
 
@@ -69,16 +70,40 @@ public class Image {
         return holder;
     }*/
 
-    public void setImage(final byte[] image) {
+    public void setImage(File imageCacheDirectory, final byte[] image, Location location, float azimuth) {
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-        this.imageByte = image;
+                    FileOutputStream imageTempFile = new FileOutputStream();
+                    imageTempFile.write(image);
+                    imageTempFile.close();
+                    new File(imageCacheDirectory, imageTempFile.getFD().)
+                    if(!imageTempFile.setWritable(true)){
+                        throw new IOException();
+                    }
+                    exifInterface = new ExifInterface(imageFile.getName());
+                    double[] latlng = exifInterface.getLatLong();
+                    setOpenLocationCode(
+                            new OpenLocationCode(latlng[0],latlng[1], OpenLocationCode.CODE_PRECISION_EXTRA)
+                    );
+
+                    exifInterface.setAttribute("olc", getOpenLocationCode().getCode());
+                    exifInterface.saveAttributes();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });*/
+
     }
 
     public void setImage(final File image){
 
 
         try {
-            imageFile = File.createTempFile("IMG_" + getDate(),".jpg", image);
+            imageFile = File.createTempFile(setNewFileName(), ".jpg", image);
             //imageFile.setWritable(true);
             if(!imageFile.setWritable(true)){
                 throw new IOException();
@@ -103,6 +128,10 @@ public class Image {
         return timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHmmss",
                         Locale.getDefault()).format(new Date());
+    }
+
+    public String setNewFileName() {
+        return ("IMG_" + getDate());
     }
 
     private void setOpenLocationCode(OpenLocationCode openLocationCode){

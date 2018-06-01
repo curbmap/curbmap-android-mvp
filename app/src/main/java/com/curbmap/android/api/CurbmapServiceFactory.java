@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CurbmapServiceFactory {
 
     private static final String TAG = "CurbmapServiceFactory";
-    private static final String BASE_URL = "https://curbmap.com:50003/";
+    private static final String BASE_URL = "https://curbmap.com";
 
     public static CurbmapService create(){
         Log.i(TAG, "created");

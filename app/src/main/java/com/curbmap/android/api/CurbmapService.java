@@ -26,7 +26,7 @@ public interface CurbmapService{
      * @param password The password to attempt for login
      * @return The call to the server requesting the login
      */
-    @POST("login")
+    @POST("/login")
     @FormUrlEncoded
     LiveData<ApiResponse<User>> doLogin(
             @Field("username") String username,
@@ -34,7 +34,7 @@ public interface CurbmapService{
     );
 
 
-    @POST("login")
+    @POST("/login")
     @FormUrlEncoded
     LiveData<ApiResponse<User>> doLogin(User user);
 
@@ -49,7 +49,7 @@ public interface CurbmapService{
      *                         degrees clockwise from True North
      * @return The call to to upload the image to the server
      */
-    @POST("imageUpload")
+    @POST(":50003/imageUpload")
     @Multipart
     LiveData<ApiResponse<String>> doUploadImage(
             @Header("Authorization") String bearerSpaceToken,

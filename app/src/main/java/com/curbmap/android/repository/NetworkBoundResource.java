@@ -54,7 +54,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
         resultLiveDataMediator.addSource(dbSource, data -> {
             resultLiveDataMediator.removeSource(dbSource);
-            if (shouldFetch(data)) {
+            if (shouldFetchFromNetwork(data)) {
                 fetchFromNetwork(dbSource);
             } else {
                 resultLiveDataMediator.addSource(dbSource, newData -> setValue(NetworkState.success(newData)));
@@ -134,7 +134,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
      * @return boolean
      */
     @MainThread
-    protected abstract boolean shouldFetch(@Nullable ResultType data);
+    protected abstract boolean shouldFetchFromNetwork(@Nullable ResultType data);
 
     @MainThread
     protected abstract boolean shouldLoadFromDb();

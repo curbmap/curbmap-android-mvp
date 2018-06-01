@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -31,6 +32,7 @@ import android.util.Log;
 
 import com.curbmap.android.R;
 import com.curbmap.android.domain.PermissionValues;
+import com.google.gson.JsonSyntaxException;
 
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -46,6 +48,17 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            // JSON here
+        } catch (JsonSyntaxException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         navigationController = NavigationController.create(this);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {

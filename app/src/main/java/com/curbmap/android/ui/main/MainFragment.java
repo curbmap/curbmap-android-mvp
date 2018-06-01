@@ -56,8 +56,7 @@ public class MainFragment extends Fragment {
 
     private static final String TAG = "MainFragment";
 
-    private static final String LOGIN_TOKEN = "token";
-
+    String status;
     Compass compass;
     LocationSupplier locationSupplier;
     MainViewModel mainViewModel;
@@ -74,9 +73,14 @@ public class MainFragment extends Fragment {
 
     public static MainFragment create(String token) {
         MainFragment mainFragment = new MainFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(LOGIN_TOKEN, token);
-        mainFragment.setArguments(bundle);
+        //Bundle bundle = new Bundle();
+        //bundle.putString(LOGIN_TOKEN, token);
+        //mainFragment.setArguments(bundle);
+        return mainFragment;
+    }
+
+    public static MainFragment create() {
+        MainFragment mainFragment = new MainFragment();
         return mainFragment;
     }
 
@@ -108,6 +112,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
         if (!locationSupplier.setupLocationListener()) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PermissionValues.PERMISSION_REQUEST_LOCATION);
         }
@@ -179,18 +185,18 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.capture_button)
     void doCapture() {
+        mainViewModel.doDefaultLogin();
+        if (shouldShowRequestPermissionRationale(Manifest.permission_group.STORAGE)) {
+            requestPermissions(new String[]{Manifest.permission_group.STORAGE}, PermissionValues.PERMISSION_REQUEST_STORAGE);
+        }
 
         Log.d(TAG, "doCapture button");
 
         cameraView.captureImage(cameraKitImage -> {
             Log.i(TAG, "captureImage Called");
             mainViewModel.saveImage(cameraKitImage.getJpeg(), locationSupplier.getLocation(), compass.getAzimuth());
-        });
 
-        if (getCacheDirectory().canWrite()) {
-            File images = new File(getCacheDirectory(), "images");
-            images.mkdir();
-        }
+        });
     }
 
 
@@ -204,7 +210,7 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.account_circle)
     void doLoginFragment() {
         locationSupplier.freeLocationListeners();
-        MainActivity.getNavigationController().navigateToLogin(null, null);
+        MainActivity.getNavigationController().navigateToLogin();
     }
 
     private void requestLocationPermission() {
@@ -233,7 +239,9 @@ public class MainFragment extends Fragment {
 
     private File getCacheDirectory() {
         File cache;
-        if (Environment.MEDIA_MOUNTED.equals(
+        if (Environment.isExternalStorageEmulated()) {
+            cache = this.requireActivity().getCacheDir();
+        } else if (Environment.MEDIA_MOUNTED.equals(
                 Environment.getExternalStorageState())) {
             cache = this.requireActivity().getExternalCacheDir();
         } else {

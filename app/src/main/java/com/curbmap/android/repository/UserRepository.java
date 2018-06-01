@@ -37,6 +37,7 @@ public class UserRepository {
     private CurbmapService curbmapService;
     private AppThreadingExecutors appThreadingExecutors;
     LiveData<ApiResponse<User>> liveDataUser;
+    private User user;
 
     public UserRepository(CurbmapService curbmapService, AppThreadingExecutors appThreadingExecutors) {
         this.curbmapService = curbmapService;
@@ -53,7 +54,7 @@ public class UserRepository {
              */
             @Override
             protected void saveCallResult(@NonNull User item) {
-
+                user = item;
 
                 //sharedPreferences.edit().putString("token", item.getToken());
             }
@@ -68,8 +69,8 @@ public class UserRepository {
              * {@inheritDoc}
              */
             @Override
-            protected boolean shouldFetch(@Nullable User data) {
-                Log.i(TAG, "shouldFetch(User) Called");
+            protected boolean shouldFetchFromNetwork(@Nullable User data) {
+                Log.i(TAG, "shouldFetchFromNetwork(User) Called");
                 data.setUsername(username);
                 data.setPassword(password);
                 return true;
@@ -103,5 +104,9 @@ public class UserRepository {
             }
 
         }.asLiveData();
+    }
+
+    public User getUser() {
+        return user;
     }
 }

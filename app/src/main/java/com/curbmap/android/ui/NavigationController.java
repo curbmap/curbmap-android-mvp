@@ -16,7 +16,6 @@
 
 package com.curbmap.android.ui;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 
 import com.curbmap.android.R;
@@ -56,14 +55,9 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
-    public void navigateToLogin(@Nullable String username, @Nullable String password) {
+    public void navigateToLogin() {
         LoginDialogFragment loginDialogFragment;
-        if (password != null) {
-            loginDialogFragment = LoginDialogFragment.create(username, password);
-        } else {
-            loginDialogFragment = LoginDialogFragment.create();
-        }
-
+        loginDialogFragment = LoginDialogFragment.create();
         fragmentManager.beginTransaction()
                 .replace(containerId, loginDialogFragment)
                 .addToBackStack(null)
